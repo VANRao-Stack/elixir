@@ -1,4 +1,6 @@
-from .cantorProject import __init__ as cp
+from .cantorProject.network import Network
+from .cantorProject.tfp_trainer import tfp_Trainer, set_weight
+from .cantorProject.sci_trainer import sci_Trainer
 
 class nn_solver(object):
   def __init__(self, head):
