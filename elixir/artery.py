@@ -8,8 +8,9 @@ from tensorflow.keras.layers import Lambda
 
 
 class artery:
-    def __init__(self, elasticity_func, relaxed_radius_func, delta_b, Ru=1, Rd=2, L=6, Reynolds_no=2, E=3, h=6, q_0=3,
-                 length_domain=(0, 5), time_domain = (0,10), tow=3, timeperiod=10, 
+    def __init__(self, elasticity_func, relaxed_radius_func, delta_b, Ru=0.37, Rd=0.37, L=20.8, Reynolds_no=4500,
+                 E=4.8 * math.pow(10,5), h=0.065, q_0=3,
+                 tow=0.3, timeperiod=0.8, 
                  layers=[50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50], activation='tanh', num_train_samples=50000):
         self.elasticity_func = elasticity_func
         self.relaxed_radius_func = relaxed_radius_func
@@ -17,12 +18,11 @@ class artery:
         self.Ru = Ru
         self.Rd = Rd
         self.L = L
-        self.length_domain = length_domain
-        self.time_domain = time_domain
+        self.length_domain = (0,L)
+        self.time_domain = (0,timeperiod)
         self.tow = tow
         self.timeperiod = timeperiod
         self.layers = layers
-        #self.bnd_cond = bnd_cond
         self.activation = activation
         self.num_train_samples = num_train_samples
         
