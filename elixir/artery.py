@@ -1,6 +1,6 @@
 
 
-import cantorProject as cp
+from .cantorProject import __init__ as cp
 import tensorflow as tf
 import numpy as np
 import math
