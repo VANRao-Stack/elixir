@@ -1,4 +1,4 @@
-import .cantorProject as cp
+import cantorProject as cp
 
 class nn_solver(object):
   def __init__(self, head):
