@@ -314,7 +314,7 @@ class artery:
         
         return x_train, y_train
     
-    def sci_train(self, first_order_trainer='rmsprop',  batch_size=128, first_order_epochs=500, 
+    def sci_train(self, first_order_trainer='rmsprop',  batch_size=128, first_order_epochs=10, 
                   factr=10, m=50, maxls=50, maxiter=15000):
         x_train, y_train = self.create_dataset()
         trainer = sci_Trainer(self.pinn, x_train, y_train, first_order_trainer=first_order_trainer, batch_size=batch_size, 
