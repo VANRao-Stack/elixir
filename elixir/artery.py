@@ -1,8 +1,9 @@
 
-
-from .cantorProject.network import Network
-from .cantorProject.tfp_trainer import tfp_Trainer, set_weights
-from .cantorProject.sci_trainer import sci_Trainer
+  
+from .cantorProject.network import Network as cp.Network
+from .cantorProject.tfp_trainer import tfp_Trainer as cp.tfp_Trainer
+from .cantorProject.tfp_trainer import set_weights as cp.set_weights
+from .cantorProject.sci_trainer import sci_Trainer as cp.sci_Trainer
 import tensorflow as tf
 import numpy as np
 import math
