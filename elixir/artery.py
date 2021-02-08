@@ -268,11 +268,9 @@ class find_derivatives_f0(tf.keras.layers.Layer):
     
     
 class artery:
-    def __init__(self, elasticity_func, relaxed_radius_func, delta_b=2*math.pow(10,-3), Ru=0.37, Rd=0.37, L=20.8, Reynolds_no=4500, E=4.8, h=0.065, q_0=450,
+    def __init__(self, delta_b=2*math.pow(10,-3), Ru=0.37, Rd=0.37, L=20.8, Reynolds_no=4500, E=4.8, h=0.065, q_0=450,
                  length_domain=(0, 20.8), time_domain = (0,0.8), tow=.3, timeperiod=0.8, 
                  layers=[50] * 9, activation='tanh', num_train_samples=100000):
-        self.elasticity_func = elasticity_func
-        self.relaxed_radius_func = relaxed_radius_func
         self.delta_b = delta_b
         self.Ru = Ru
         self.Rd = Rd
@@ -289,7 +287,7 @@ class artery:
         
         self.R_network = Network.build(num_inputs = 2,layers=self.layers, activation=self.activation)
         self.q_network = Network.build(num_inputs = 2,layers = self.layers, activation = self.activation)
-        self.pinn = PINN(self.R_network, self.q_network).build(self.delta_b, E, h, self.elasticity_func, 253/100, 139/100, 1.3384, Ru, Rd, L, Reynolds_no, q_0)
+        self.pinn = PINN(self.R_network, self.q_network).build(self.delta_b, E, h, elasticity_func, 253/100, 139/100, 1.3384, Ru, Rd, L, Reynolds_no, q_0)
         self.pinn.summary()
         
     def create_dataset(self):
