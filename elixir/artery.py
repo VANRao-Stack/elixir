@@ -139,7 +139,7 @@ class PINN:
     )    
     
  
- class t2_class(tf.keras.layers.Layer):
+class t2_class(tf.keras.layers.Layer):
   def __init__(self,Ru,Rd,L,**kwargs):
     super().__init__(self,**kwargs)
     self.Ru = Ru
