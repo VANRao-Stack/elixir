@@ -38,6 +38,31 @@ class GradientLayer(tf.keras.layers.Layer):
           tx: (z,t)
         Returns:
           A : Area as computed from the output of R_model
+          q : Output of q_model
+          R : Output of R_model 
+          dA_dt : First derivative of A w.r.t t
+          dq_dt : First derivative of q w.r.t t
+          dq_dz : First derivatice of q w.r.t z
+        """
+        #print(tx)
+        #tx = tf.keras.layers.Concatenate(inputs)
+        #z=inputs[0]
+        #t=inputs[1]
+        with tf.GradientTape() as g1:
+            g1.watch(tx)
+            R = self.R_model(tx)
+            A = np.pi * (R**2)
+        dA_dtx = g1.batch_jacobian(A,tx)
+        dA_dt = dA_dtx[...,1]
+
+        with tf.GradientTape() as g2:
+            g2.watch(tx)
+            q = self.q_model(tx)
+        dq_dtx = g2.batch_jacobian(q,tx)
+        dq_dz = dq_dtx[...,0]
+        dq_dt = dq_dtx[...,1]
+
+        return A,q,R,dA_dt,dq_dt,dq_dz
           
           
 class PINN:
