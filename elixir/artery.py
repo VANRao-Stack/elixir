@@ -42,9 +42,9 @@ class GradientLayer(tf.keras.layers.Layer):
           
 class PINN:
   """
-    Container for the physics informed neural network
-    Builds the complete model
-    """
+  Container for the physics informed neural network
+  Builds the complete model
+  """
   def __init__(self,R_network,q_network):
     """
     Args : 
