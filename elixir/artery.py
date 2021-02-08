@@ -3,6 +3,7 @@
 from .cantorProject.network import Network
 from .cantorProject.tfp_trainer import tfp_Trainer, set_weights
 from .cantorProject.sci_trainer import sci_Trainer
+from .utils import plot
 import tensorflow as tf
 import numpy as np
 import math
@@ -319,7 +320,7 @@ class artery:
         trainer = sci_Trainer(self.pinn, x_train, y_train, first_order_trainer=first_order_trainer, batch_size=batch_size, 
                                  first_order_epochs=first_order_epochs, factr=factr, m=m, maxls=maxls, maxiter=maxiter)
         trainer.train()
-        return self.R_network,self.q_network
+        return self.R_network, self.q_network
     
     def tfp_trainer(self, first_order_trainer='rmsprop', batch_size=128, first_order_epochs=10,
                  factr=10, m=50, maxls=50, maxiter=15000):
@@ -329,6 +330,12 @@ class artery:
         result = tfp_trainer.train()
         set_weights(tfp_trainer, self.pinn, result.position)
         return self.networking
+    
+    def plot_flow(num_test_samples=100):
+        plot(self.q_network, (0, self.L), self.time_domain, 'flow', num_test_samples)
+        
+    def plot_radius(num_test_samples=100):
+        plot(self.R_network, (0, self.L), self.time_domain, 'radii', num_test_samples)    
         
         
 
