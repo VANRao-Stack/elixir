@@ -1,7 +1,7 @@
 
 
 from .cantorProject.network import Network
-from .cantorProject.tfp_trainer import tfp_Trainer, set_weight
+from .cantorProject.tfp_trainer import tfp_Trainer, set_weights
 from .cantorProject.sci_trainer import sci_Trainer
 import tensorflow as tf
 import numpy as np
