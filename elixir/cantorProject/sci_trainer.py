@@ -107,7 +107,7 @@ class sci_Trainer:
         loss, _ = self.evaluate(weights)
         self.progbar.on_batch_end(0, logs=dict(zip(self.metrics, [loss])))
 
-    def train(self):
+    def train(self, use_second_order=False):
         """
         Train the model using L-BFGS-B algorithm.
         """
@@ -119,11 +119,12 @@ class sci_Trainer:
         print('Running First order optimizer: \n')
         self.model.fit(x=self.x_train, y=self.y_train, batch_size=self.batch_size, epochs=self.first_order_epochs)
         # optimize the weight vector
-        print('\nOptimizer: L-BFGS-B (maxiter={})'.format(self.maxiter))
-        self.progbar.on_train_begin()
-        self.progbar.on_epoch_begin(1)
-        scipy.optimize.fmin_l_bfgs_b(func=self.evaluate, x0=initial_weights,
-            factr=self.factr, m=self.m, maxls=self.maxls, maxiter=self.maxiter,
-            callback=self.callback)
-        self.progbar.on_epoch_end(1)
-        self.progbar.on_train_end()
+        if use_second_order:
+            print('\nOptimizer: L-BFGS-B (maxiter={})'.format(self.maxiter))
+            self.progbar.on_train_begin()
+            self.progbar.on_epoch_begin(1)
+            scipy.optimize.fmin_l_bfgs_b(func=self.evaluate, x0=initial_weights,
+                factr=self.factr, m=self.m, maxls=self.maxls, maxiter=self.maxiter,
+                callback=self.callback)
+            self.progbar.on_epoch_end(1)
+            self.progbar.on_train_end()
