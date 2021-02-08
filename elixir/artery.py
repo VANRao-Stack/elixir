@@ -331,10 +331,10 @@ class artery:
         set_weights(tfp_trainer, self.pinn, result.position)
         return self.networking
     
-    def plot_flow(num_test_samples=100):
+    def plot_flow(self, num_test_samples=100):
         plot(self.q_network, (0, self.L), self.time_domain, 'flow', num_test_samples)
         
-    def plot_radius(num_test_samples=100):
+    def plot_radius(self, num_test_samples=100):
         plot(self.R_network, (0, self.L), self.time_domain, 'radii', num_test_samples)    
         
         
