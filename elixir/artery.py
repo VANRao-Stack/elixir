@@ -240,7 +240,7 @@ class p_class(tf.keras.layers.Layer):
     
 
 class find_derivatives_r0(tf.keras.layers.Layer):
-  def __init__(self,R_network,Ru,Rd,L,relaxed_radius_func,**kwargs):
+  def __init__(self,R_network,Ru,Rd,L,**kwargs):
     super().__init__(self,**kwargs)
     self.R_network = R_network
     self.Ru = Ru
