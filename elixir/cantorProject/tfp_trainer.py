@@ -60,14 +60,15 @@ class tfp_Trainer(object):
   
         return loss, grads
 
-    def train(self):
+    def train(self, use_second_order=False):
         self.model.compile(optimizer=self.first_order_trainer, loss='mse')
         print('Running First order optimizer: \n')
         self.model.fit(x=self.x_train, y=self.y_train, batch_size=self.batch_size, epochs=self.first_order_epochs)
-        print('\nRunning L-BFGS Optimizer: \n')
-        results = tfp.optimizer.lbfgs_minimize(value_and_gradients_function=self.grad_and_loss_func, 
-                                               initial_position=self.init_params, max_iterations=self.bfgs_iter)
-        self.set_weights(results.position)
+        if use_second_order:
+            print('\nRunning L-BFGS Optimizer: \n')
+            results = tfp.optimizer.lbfgs_minimize(value_and_gradients_function=self.grad_and_loss_func, 
+                                                   initial_position=self.init_params, max_iterations=self.bfgs_iter)
+            self.set_weights(results.position)
 
 
 def set_weights(trainer, model, params_1d):
