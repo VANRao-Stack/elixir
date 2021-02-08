@@ -6,7 +6,7 @@ class nn_solver(object):
   def __init__(self, head):
     self.head = head
     
-  def sci_train(self, artery=None, first_order_trainer='rmsprop',  batch_size=128, first_order_epochs=500, 
+  def sci_train(self, artery=None, first_order_trainer='rmsprop',  batch_size=128, first_order_epochs=10, 
                 factr=10, m=50, maxls=50, maxiter=15000):
 
     if artery == None:
