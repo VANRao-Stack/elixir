@@ -30,9 +30,3 @@ comes from a standard list of such methods.
 We present a new method that, unlike its predecessors, offers a continuous
 solution, along with other benefits such as GPU support, a massive community,
 and such like. 
-
-## Usage
-
-Currently, the package only supports simulation of a single artery, with future updates we 
-propose the same to be extended to an entire arterial tree. 
-
