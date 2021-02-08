@@ -330,10 +330,10 @@ class artery:
         return self.networking
     
     def plot_flow(self, num_test_samples=100):
-        plot(self.q_network, (0, self.L), self.time_domain, 'flow', num_test_samples)
+        plot(self.R_network, (0, self.L), self.time_domain, 'flow', num_test_samples)
         
     def plot_radius(self, num_test_samples=100):
-        plot(self.R_network, (0, self.L), self.time_domain, 'radii', num_test_samples)    
+        plot(self.q_network, (0, self.L), self.time_domain, 'radii', num_test_samples)    
         
         
 
