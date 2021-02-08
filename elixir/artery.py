@@ -1,9 +1,8 @@
 
   
-from .cantorProject.network import Network as cp.Network
-from .cantorProject.tfp_trainer import tfp_Trainer as cp.tfp_Trainer
-from .cantorProject.tfp_trainer import set_weights as cp.set_weights
-from .cantorProject.sci_trainer import sci_Trainer as cp.sci_Trainer
+from .cantorProject.network import Network
+from .cantorProject.tfp_trainer import tfp_Trainer, set_weights
+from .cantorProject.sci_trainer import sci_Trainer
 import tensorflow as tf
 import numpy as np
 import math
@@ -288,8 +287,8 @@ class artery:
         self.activation = activation
         self.num_train_samples = num_train_samples
         
-        self.R_network = cp.Network.build(num_inputs = 2,layers=self.layers, activation=self.activation)
-        self.q_network = cp.Network.build(num_inputs = 2,layers = self.layers, activation = self.activation)
+        self.R_network = Network.build(num_inputs = 2,layers=self.layers, activation=self.activation)
+        self.q_network = Network.build(num_inputs = 2,layers = self.layers, activation = self.activation)
         self.pinn = PINN(self.R_network, self.q_network).build(self.delta_b, E, h, self.elasticity_func, 253/100, 139/100, 1.3384, Ru, Rd, L, Reynolds_no, q_0)
         self.pinn.summary()
         
@@ -319,7 +318,7 @@ class artery:
     def sci_train(self, first_order_trainer='rmsprop',  batch_size=128, first_order_epochs=500, 
                   factr=10, m=50, maxls=50, maxiter=15000):
         x_train, y_train = self.create_dataset()
-        trainer = cp.sci_Trainer(self.pinn, x_train, y_train, first_order_trainer=first_order_trainer, batch_size=batch_size, 
+        trainer = sci_Trainer(self.pinn, x_train, y_train, first_order_trainer=first_order_trainer, batch_size=batch_size, 
                                  first_order_epochs=first_order_epochs, factr=factr, m=m, maxls=maxls, maxiter=maxiter)
         trainer.train()
         return self.R_network,self.q_network
@@ -327,10 +326,10 @@ class artery:
     def tfp_trainer(self, first_order_trainer='rmsprop', batch_size=128, first_order_epochs=10,
                  factr=10, m=50, maxls=50, maxiter=15000):
         x_train, y_train = self.create_dataset()
-        tfp_trainer = cp.tfp_Trainer(self.pinn, x_train, y_train, first_order_trainer=first_order_trainer, batch_size=batch_size, 
+        tfp_trainer = tfp_Trainer(self.pinn, x_train, y_train, first_order_trainer=first_order_trainer, batch_size=batch_size, 
                                      first_order_epochs=first_order_epochs, maxiter=maxiter)
         result = tfp_trainer.train()
-        cp.set_weights(tfp_trainer, self.pinn, result.position)
+        set_weights(tfp_trainer, self.pinn, result.position)
         return self.networking
         
         
