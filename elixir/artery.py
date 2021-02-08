@@ -240,7 +240,7 @@ class p_class(tf.keras.layers.Layer):
     
 
 class find_derivatives_r0(tf.keras.layers.Layer):
-  def __init__(self,R_network,Ru,Rd,L,**kwargs):
+  def __init__(self,R_network,Ru,Rd,L,relaxed_radius_func,**kwargs):
     super().__init__(self,**kwargs)
     self.R_network = R_network
     self.Ru = Ru
@@ -341,3 +341,16 @@ def initial_q(t,timeperiod,tow,q_0):
   #print(t1)
   return ((q_0*t)/( (tow**2) * t1))/1000000
 
+def relaxed_radius_func(z, Ru, Rd, L):
+  #print(z)
+  #print("Relrad")
+  #print(type(Rd))
+  #print(type(Ru))
+  Ru = float(Ru)
+  temp = tf.cast(tf.math.log(Rd/Ru),tf.float64,name=None)
+  #print(temp)
+  #print(type(temp))
+  return Ru*tf.exp(temp*(z/L))
+
+def elasticity_func(r0):
+  return 2/3*r0
