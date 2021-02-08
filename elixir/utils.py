@@ -12,7 +12,7 @@ def plot(network, z, t, plot_type, num_test_samples=1000):
   for i in range(100):
     temp = []
     for j in range(100):
-      temp.append(function[0].predict(np.asarray([[z_flat[i], t_flat[j]]])))
+      temp.append(network.predict(np.asarray([[z_flat[i], t_flat[j]]])))
     z.append(temp) 
   for i in range(len(z)):
     z[i] = np.asarray(z[i])
