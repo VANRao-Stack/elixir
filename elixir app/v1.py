@@ -24,8 +24,8 @@ Builder.load_string("""
             size: self.size
             pos: self.pos
 <ColorLabel@BackgroundColor+Label>:
-    background_color:(135/255,0,106/255,1)
-    color:(0,22/255,112/255,1)
+    background_color:(0/255,155/255,133/255,1)
+    color:(1,1,1,1)
 
 <ColorTextInput@TextInput>:
     background_color:(135/255,0,106/255,1)
@@ -64,18 +64,28 @@ Builder.load_string("""
             BoxLayout:
                 
         RelativeLayout:
-            canvas.before:
-                Color:
-                    rgba:(0,2/255,46/255,1)
+            Image:
+                source: "./Media/BlueCum.jpg"
+                allow_stretch: True
+                keep_ratio: False
+            #canvas.before:
+                #Color:
+                    #rgba:(0,2/255,46/255,1)
                     #rgba:(.5,.5,.5,.5)
-                Rectangle:
-                    pos:root.pos
-                    size:root.size
+                #Rectangle:
+                    #pos:root.pos
+                    #size:root.size
+                
             BoxLayout:
                 pos_hint: {"center_x":.5,"center_y":.5}
-                size_hint : .5,.5
+                size_hint : .6,.65
                 orientation:"vertical"
-                spacing:[30,50]
+                canvas.before:
+                    Color:
+                        rgba:(1,1,1,1)
+                    Rectangle:
+                        pos:self.pos
+                        size:self.size
                 GridLayout:
                     cols:2
                     rows:3
@@ -83,6 +93,8 @@ Builder.load_string("""
                     downStr : downStr
                     timePeriod : timePeriod
                     spacing:[0,20]
+                    padding:[20,20]
+                    size_hint: (1,.8)
                     ColorLabel:
                         text:"Upstream Radius (Ru)"
                     TextInput:
@@ -98,17 +110,32 @@ Builder.load_string("""
                         text:"Time period"
                     TextInput:
                         id:timePeriod
-                RelativeLayout:
-                    size_hint:1,0.2  
-                    MDFillRoundFlatButton:
-                        text: "Submit"
-                        theme_text_color: "Custom"
-                        text_color: 1, 1, 1, 1
-                        md_bg_color: (135/255,0,106/255,1)
-                        size_hint : 0.5,0.7
-                        pos_hint:{'center_x':.5,'center_y':.5}
-                        on_release:
-                            app.root.current = "load"
+
+                BoxLayout:
+                    orientation:"horizontal"
+                    size_hint:1,0.1  
+                    RelativeLayout:
+                        MDFillRoundFlatButton:
+                            text: "Advanced Settings"
+                            text_size:self.size
+                            font_size:10
+                            theme_text_color: "Custom"
+                            text_color: 1, 1, 1, 1
+                            md_bg_color: (0/255,155/255,133/255,1)
+                            size_hint : 0.5,0.7
+                            pos_hint:{'center_x':.5,'center_y':.7}
+                            on_release:
+                                app.root.current = "load"
+                    RelativeLayout:
+                        MDFillRoundFlatButton:
+                            text: "Submit"
+                            theme_text_color: "Custom"
+                            text_color: 1, 1, 1, 1
+                            md_bg_color: (0/255,155/255,133/255,1)
+                            size_hint : 0.5,0.7
+                            pos_hint:{'center_x':.5,'center_y':.7}
+                            on_release:
+                                app.root.current = "load"
 
 <LoadingScreen>:
     name : "load"
