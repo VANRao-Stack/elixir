@@ -14,7 +14,7 @@ from kivymd.app import MDApp
 from kivymd.uix.textfield import MDTextField
 from kivymd.uix.button import MDFillRoundFlatButton,MDIconButton
 from kivymd.uix.label import MDIcon
-#import elixir as ex
+import elixir as ex
 
 Builder.load_string("""
 <BackgroundColor@Widget>:
@@ -312,18 +312,17 @@ class InputScreen(Screen):
     
     def on_submit(self):
         #create the model object and then pass it to the loading screen
-        """head = ex.artery(Ru=float(self.upStr.text), Rd=float(self.downStr.text), timeperiod=float(self.timePeriod.text))
-        LoadingScreen.arteryObj = head"""
+        head = ex.artery(Ru=float(self.upStr.text), Rd=float(self.downStr.text), timeperiod=float(self.timePeriod.text))
+        LoadingScreen.arteryObj = head
         #print(self.upStr.text)
         app = App.get_running_app()
         app.root.current = "load"
 
 class LoadingScreen(Screen):
     arteryObj = None
-    def on_enter(self):
-        """        
+    def on_enter(self):        
         ResultsScreen.model = self.arteryObj.sci_train()
-        ResultsScreen.arteryObj = arteryObj"""
+        ResultsScreen.arteryObj = arteryObj
         app = App.get_running_app()
         app.root.current = "resultoption"
 
@@ -344,8 +343,8 @@ class PredictorScreen(Screen):
     q = ObjectProperty(None)
     def predict(self):
         #print("predicting")
-        self.r.text="R"
-        self.q.text="Q"
+        self.r.text=self.arteryObj.q_network[[float(self.z.text), float(self.t.text)]]
+        self.q.text=self.arteryObj.R_network[[self.z.text, float(self.t.text)]]
     
 
 class v1App(MDApp):
