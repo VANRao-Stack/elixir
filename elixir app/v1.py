@@ -13,6 +13,7 @@ from kivymd.app import MDApp
 from kivymd.uix.textfield import MDTextField
 from kivymd.uix.button import MDFillRoundFlatButton,MDIconButton
 from kivymd.uix.label import MDIcon
+import elixir as ex
 
 Builder.load_string("""
 <BackgroundColor@Widget>:
@@ -26,10 +27,8 @@ Builder.load_string("""
 <ColorLabel@BackgroundColor+Label>:
     background_color:(0/255,155/255,133/255,1)
     color:(1,1,1,1)
-
 <ColorTextInput@TextInput>:
     background_color:(135/255,0,106/255,1)
-
 <InputScreen>:
     name : "input"
     upStr:upStr
@@ -110,7 +109,6 @@ Builder.load_string("""
                         text:"Time period"
                     TextInput:
                         id:timePeriod
-
                 BoxLayout:
                     orientation:"horizontal"
                     size_hint:1,0.1  
@@ -135,7 +133,6 @@ Builder.load_string("""
                             pos_hint:{'center_x':.5,'center_y':.7}
                             on_release:
                                 root.on_submit()
-
 <LoadingScreen>:
     name : "load"
     BoxLayout:
@@ -189,10 +186,8 @@ class InputScreen(Screen):
     
     def on_submit(self):
         #create the model object and then pass it to the loading screen
-        """
-        head = artery()
+        head = ex.artery(Ru=float(self.upStr.text), Rd=float(self.downStr.text), timeperiod=float(self.timePeriod.text))
         LoadingScreen.arteryObj = head
-        """
         #print(self.upStr.text)
         app = App.get_running_app()
         app.root.current = "load"
@@ -200,17 +195,12 @@ class InputScreen(Screen):
 class LoadingScreen(Screen):
     arteryObj = None
     def on_enter(self):
-        print("Entered test")
-        for i in range(10):
-            print(i)
         app = App.get_running_app()
         app.root.current = "input"
-        """
         ResultsScreen.model = self.arteryObj.sci_train()
         ResultsScreen.arteryObj = arteryObj
         app = App.get_running_app()
         app.root.current = "main"
-        """
 
 class ResultScreen(Screen):
     arteryObj = None
@@ -222,11 +212,13 @@ class v1App(MDApp):
         sm = ScreenManager(transition=CardTransition())
         sm.add_widget(InputScreen())
         sm.add_widget(LoadingScreen())
+        sm.add_widget(ResultScreen)
         return sm
 
 
 
 if __name__ == "__main__":
     v1App().run()
+
 
 
