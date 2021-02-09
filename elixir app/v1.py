@@ -32,6 +32,9 @@ Builder.load_string("""
 
 <InputScreen>:
     name : "input"
+    upStr:upStr
+    downStr:downStr
+    timePeriod:timePeriod
     BoxLayout:
         orientation: "horizontal"
         BoxLayout:
@@ -89,9 +92,6 @@ Builder.load_string("""
                 GridLayout:
                     cols:2
                     rows:3
-                    upStr : upStr
-                    downStr : downStr
-                    timePeriod : timePeriod
                     spacing:[0,20]
                     padding:[20,20]
                     size_hint: (1,.8)
@@ -117,8 +117,7 @@ Builder.load_string("""
                     RelativeLayout:
                         MDFillRoundFlatButton:
                             text: "Advanced Settings"
-                            text_size:self.size
-                            font_size:10
+                            text_size:self.width, None 
                             theme_text_color: "Custom"
                             text_color: 1, 1, 1, 1
                             md_bg_color: (0/255,155/255,133/255,1)
@@ -135,7 +134,7 @@ Builder.load_string("""
                             size_hint : 0.5,0.7
                             pos_hint:{'center_x':.5,'center_y':.7}
                             on_release:
-                                app.root.current = "load"
+                                root.on_submit()
 
 <LoadingScreen>:
     name : "load"
@@ -186,6 +185,7 @@ class InputScreen(Screen):
     timePeriod = ObjectProperty(None)
     def on_enter(self):
         print("Entered input")
+
     
     def on_submit(self):
         #create the model object and then pass it to the loading screen
@@ -193,13 +193,15 @@ class InputScreen(Screen):
         head = artery()
         LoadingScreen.arteryObj = head
         """
-        pass
+        #print(self.upStr.text)
+        app = App.get_running_app()
+        app.root.current = "load"
 
 class LoadingScreen(Screen):
     arteryObj = None
     def on_enter(self):
         print("Entered test")
-        for i in range(10000):
+        for i in range(10):
             print(i)
         app = App.get_running_app()
         app.root.current = "input"
