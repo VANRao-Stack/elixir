@@ -274,8 +274,8 @@ class artery:
         self.Ru = Ru
         self.Rd = Rd
         self.L = L
-        self.length_domain = length_domain
-        self.time_domain = time_domain
+        self.length_domain = (0,L)
+        self.time_domain = (0,timeperiod)
         self.tow = tow
         self.q_0 = q_0
         self.timeperiod = timeperiod
