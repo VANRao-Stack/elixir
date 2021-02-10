@@ -13,9 +13,10 @@ from kivymd.app import MDApp
 from kivymd.uix.textfield import MDTextField
 from kivymd.uix.button import MDFillRoundFlatButton,MDIconButton
 from kivymd.uix.label import MDIcon
-#import elixir as ex
-#import seaborn as sns
-#import matplotlib.pyplot as plt
+import elixir as ex
+import seaborn as sns
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 Builder.load_string("""
@@ -161,7 +162,6 @@ Builder.load_string("""
     qzer:qzer
     activation:activation
     numsamp:numsamp
-
     BoxLayout:
         orientation: "horizontal"
         SideBar:
@@ -278,7 +278,6 @@ Builder.load_string("""
                             pos_hint:{'center_x':.5,'center_y':.7}
                             on_release:
                                 root.on_submit()
-
 <LoadingScreen>:
     name : "load"
     BoxLayout:
@@ -290,6 +289,11 @@ Builder.load_string("""
                 source: "./Media/BlueCum.jpg"
                 allow_stretch: True
                 keep_ratio: False
+            Label:
+                pos_hint: {"center_x":0.5, "center_y":0.5}
+                size_hint: (1, 0.3)
+                text: "Loading..."
+                font_size: "30sp"
             
 <ResultOptionScreen>:
     name : "resultoption"
@@ -514,7 +518,6 @@ Builder.load_string("""
                             pos_hint:{'center_x':.5,'center_y':.5}
                             on_release:
                                 root.flowgraph()
-
 <FlowOutputScreen>:
     name:"flowoutput"
     im:im
@@ -702,8 +705,8 @@ class InputScreen(Screen):
     
     def on_submit(self):
         #create the model object and then pass it to the loading screen
-        """head = ex.artery(Ru=float(self.upStr.text), Rd=float(self.downStr.text), timeperiod=float(self.timePeriod.text))
-        LoadingScreen.arteryObj = head"""
+        head = ex.artery(Ru=float(self.upStr.text), Rd=float(self.downStr.text), timeperiod=float(self.timePeriod.text))
+        LoadingScreen.arteryObj = head
         #print(self.upStr.text)
         app = App.get_running_app()
         app.root.current = "load"
@@ -723,14 +726,18 @@ class AdvancedInputScreen(Screen):
     def on_submit(self):
         if(self.upStr.text == ""):
             print("Empty")
+        head = ex.artery(Ru=float(self.upStr.text), Rd=float(self.downStr.text), timeperiod=float(self.timePeriod.text), L=float(self.length.text),
+                         delta_b=float(self.deltab.text), Reynolds_no=float(self.reynold.text), E=float(self.e.text), h=float(self.h.text),
+                         q_0=float(self.qzer.text), activation=float(self.activation.text), num_train_samples=float(self.numsamp.text))
+        LoadingScreen.arteryObj = head
         app = App.get_running_app()
         app.root.current = "load"
 
 class LoadingScreen(Screen):
     arteryObj = None
     def on_enter(self):        
-        """ResultsScreen.model = self.arteryObj.sci_train()
-        ResultsScreen.arteryObj = arteryObj"""
+        ResultOptionScreen.model = self.arteryObj.sci_train()
+        ResultOptionScreen.arteryObj = self.arteryObj
         app = App.get_running_app()
         app.root.current = "resultoption"
 
@@ -738,16 +745,16 @@ class ResultOptionScreen(Screen):
     arteryObj = None
     model = None
     def predictor(self):
-        """PredictorScreen.arteryObj = self.arteryObj"""
+        PredictorScreen.arteryObj = self.arteryObj
         app = App.get_running_app()
         app.root.current = "predictor"
     def flow(self):
-        """
-        FlowInputScreen.arteryObj = self.arteryObj"""
+        FlowInputScreen.arteryObj = self.arteryObj
         app = App.get_running_app()
         app.root.current = "flowinput"
 
     def radius(self):
+        RadiusInputScreen.arteryObj = self.arteryObj
         app = App.get_running_app()
         app.root.current = "radiusinput"
 
@@ -760,15 +767,15 @@ class PredictorScreen(Screen):
     q = ObjectProperty(None)
     def predict(self):
         #print("predicting")
-        """self.r.text=self.arteryObj.q_network[[float(self.z.text), float(self.t.text)]]
-        self.q.text=self.arteryObj.R_network[[self.z.text, float(self.t.text)]]"""
+        self.r.text=self.arteryObj.q_network[[float(self.z.text), float(self.t.text)]]
+        self.q.text=self.arteryObj.R_network[[self.z.text, float(self.t.text)]]
 
 class FlowInputScreen(Screen):
     arteryObj = None
     t = ObjectProperty(None)
     def flowgraph(self):
-        #compute here
-        FlowOutputScreen.graphimage  = "./Media/graph.png"
+        name = plot(self.arteryObj.R_network, self.arteryObj.L, self.arteryObj.timeperiod, 'Flow')
+        FlowOutputScreen.graphimage  = "./" + name
         app = App.get_running_app()
         app.root.current = "flowoutput"
 
@@ -783,8 +790,8 @@ class RadiusInputScreen(Screen):
     arteryObj = None
     t = ObjectProperty(None)
     def radiusgraph(self):
-        #compute here
-        RadiusOutputScreen.graphimage = "./Media/graph.png"
+        name = plot(self.arteryObj.q_network, self.arteryObj.L, self.arteryObj.timeperiod, 'Radii')
+        RadiusOutputScreen.graphimage  = "./" + name
         app = App.get_running_app()
         app.root.current = "radiusoutput"
 
