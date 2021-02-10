@@ -294,7 +294,6 @@ Builder.load_string("""
                 size_hint: (1, 0.3)
                 text: "Loading..."
                 font_size: "30sp"
-
 <GraphWaitScreenRadius>:
     name : "graphwaitradius"
     BoxLayout:
@@ -311,7 +310,6 @@ Builder.load_string("""
                 size_hint: (1, 0.3)
                 text: "Loading..."
                 font_size: "30sp"
-
 <GraphWaitScreenFlow>:
     name : "graphwaitflow"
     BoxLayout:
@@ -468,7 +466,8 @@ Builder.load_string("""
                             size_hint : 0.7,0.6
                             pos_hint:{'center_x':.5,'center_y':.5}
                             on_release:
-                                app.root.current = "resultoption"
+                                #app.root.current = "resultoption"
+                                app.root.current = "input"
                     RelativeLayout:
                         
                         MDFillRoundFlatButton:
@@ -768,11 +767,16 @@ class AdvancedInputScreen(Screen):
 
 class LoadingScreen(Screen):
     arteryObj = None
-    def on_enter(self):        
+    """def on_enter(self):        
         ResultOptionScreen.model = self.arteryObj.sci_train()
         ResultOptionScreen.arteryObj = self.arteryObj
         app = App.get_running_app()
-        app.root.current = "resultoption"
+        app.root.current = "resultoption""""
+        def on_enter(self):
+            redictorScreen.arteryObj = self.arteryObj
+            app = App.get_running_app()
+            app.root.current = "predictor"
+
 
 class ResultOptionScreen(Screen):
     arteryObj = None
