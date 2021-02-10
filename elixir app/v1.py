@@ -294,7 +294,23 @@ Builder.load_string("""
                 size_hint: (1, 0.3)
                 text: "Loading..."
                 font_size: "30sp"
-            
+
+<GraphWaitScreen>:
+    name : "graphwait"
+    BoxLayout:
+        orientation: "horizontal"
+        SideBar:
+            size_hint : 0.3,1     
+        RelativeLayout:
+            Image:
+                source: "./Media/BlueCum.jpg"
+                allow_stretch: True
+                keep_ratio: False
+            Label:
+                pos_hint: {"center_x":0.5, "center_y":0.5}
+                size_hint: (1, 0.3)
+                text: "Loading..."
+                font_size: "30sp"
 <ResultOptionScreen>:
     name : "resultoption"
     BoxLayout:
@@ -790,10 +806,20 @@ class RadiusInputScreen(Screen):
     arteryObj = None
     t = ObjectProperty(None)
     def radiusgraph(self):
+        #name = plot(self.arteryObj.q_network, self.arteryObj.L, self.arteryObj.timeperiod, 'Radii')
+        #RadiusOutputScreen.graphimage  = "./" + name
+        app = App.get_running_app()
+        app.root.current = "graphwait"
+
+class GraphWaitScreen(Screen):
+    arteryObj = None
+    def on_enter(self):
         name = plot(self.arteryObj.q_network, self.arteryObj.L, self.arteryObj.timeperiod, 'Radii')
         RadiusOutputScreen.graphimage  = "./" + name
         app = App.get_running_app()
         app.root.current = "radiusoutput"
+        
+
 
 class RadiusOutputScreen(Screen):
     graphimage= ""
@@ -833,6 +859,7 @@ class v1App(MDApp):
         sm.add_widget(RadiusInputScreen())
         sm.add_widget(RadiusOutputScreen())
         sm.add_widget(AdvancedInputScreen())
+        sm.add_widget(GraphWaitScreen())
         return sm
 
 
