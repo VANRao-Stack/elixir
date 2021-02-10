@@ -17,7 +17,6 @@ from kivymd.uix.label import MDIcon
 import elixir as ex
 import seaborn as sns
 import matplotlib.pyplot as plt
-from random import gauss
 
 
 Builder.load_string("""
@@ -364,9 +363,9 @@ def plot(network, length, time, plot_type):
     sns.set(font_scale=1.4)
     d = {'Lenght':x, plot_type:y}
     sns.lineplot(data=d, x='Lenght', y=plot_type, palette=('red',), linewidth=2.5).set_title(plot_type)
-    value = str(gauss(100, 100))
-    plt.savefig(value+'.png')
-    return value+'.png'    
+    value = plot_type + '_t_' + str(time) + '.png'
+    plt.savefig(value)
+    return value    
     
     
 class v1App(MDApp):
