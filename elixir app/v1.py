@@ -15,6 +15,10 @@ from kivymd.uix.textfield import MDTextField
 from kivymd.uix.button import MDFillRoundFlatButton,MDIconButton
 from kivymd.uix.label import MDIcon
 import elixir as ex
+import seaborn as sns
+import matplotlib.pyplot as plt
+from random import gauss
+
 
 Builder.load_string("""
 <BackgroundColor@Widget>:
@@ -347,6 +351,24 @@ class PredictorScreen(Screen):
         self.q.text=self.arteryObj.R_network[[self.z.text, float(self.t.text)]]
     
 
+def plot(network, length, time, plot_type):
+    x = np.linspace(0, int(length), int(length)*10)
+    print(x.shape)
+    y = []
+    for i in x:
+        y.append(network.predict([[i, time]]))
+    y = np.asarray(y).reshape((int(length)*10, ))
+    print(y.shape)
+    sns.set_style('darkgrid')
+    sns.set(rc={'figure.figsize':(11.7, 8.27)})
+    sns.set(font_scale=1.4)
+    d = {'Lenght':x, plot_type:y}
+    sns.lineplot(data=d, x='Lenght', y=plot_type, palette=('red',), linewidth=2.5).set_title(plot_type)
+    value = str(gauss(100, 100))
+    plt.savefig(value+'.png')
+    return value+'.png'    
+    
+    
 class v1App(MDApp):
     def build(self):
         sm = ScreenManager(transition=CardTransition())
