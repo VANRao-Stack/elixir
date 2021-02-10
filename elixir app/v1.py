@@ -295,8 +295,8 @@ Builder.load_string("""
                 text: "Loading..."
                 font_size: "30sp"
 
-<GraphWaitScreen>:
-    name : "graphwait"
+<GraphWaitScreenRadius>:
+    name : "graphwaitradius"
     BoxLayout:
         orientation: "horizontal"
         SideBar:
@@ -808,13 +808,16 @@ class RadiusInputScreen(Screen):
     def radiusgraph(self):
         #name = plot(self.arteryObj.q_network, self.arteryObj.L, self.arteryObj.timeperiod, 'Radii')
         #RadiusOutputScreen.graphimage  = "./" + name
+        GraphWaitScreenRadius.arteryObj = self.arteryObj
+        GraphWaitScreenRadius.t = self.t
         app = App.get_running_app()
-        app.root.current = "graphwait"
+        app.root.current = "graphwaitradius"
 
-class GraphWaitScreen(Screen):
+class GraphWaitScreenRadius(Screen):
     arteryObj = None
+    t = None
     def on_enter(self):
-        name = plot(self.arteryObj.q_network, self.arteryObj.L, self.arteryObj.timeperiod, 'Radii')
+        name = plot(self.arteryObj.q_network, self.arteryObj.L, float(self.t.text), 'Radii')
         RadiusOutputScreen.graphimage  = "./" + name
         app = App.get_running_app()
         app.root.current = "radiusoutput"
@@ -859,7 +862,7 @@ class v1App(MDApp):
         sm.add_widget(RadiusInputScreen())
         sm.add_widget(RadiusOutputScreen())
         sm.add_widget(AdvancedInputScreen())
-        sm.add_widget(GraphWaitScreen())
+        sm.add_widget(GraphWaitScreenRadius())
         return sm
 
 
