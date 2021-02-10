@@ -30,3 +30,5 @@ comes from a standard list of such methods.
 We present a new method that, unlike its predecessors, offers a continuous
 solution, along with other benefits such as GPU support, a massive community,
 and such like. 
+
+[![Project Elixir - Team Disrupt](http://img.https://youtu.be/8Q4nvnozVsI/0.jpg)](https://www.youtube.com/watch?v=8Q4nvnozVsI&feature=youtu.be "Project Elixir - Team Disrupt")
