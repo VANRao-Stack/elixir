@@ -31,4 +31,4 @@ We present a new method that, unlike its predecessors, offers a continuous
 solution, along with other benefits such as GPU support, a massive community,
 and such like. 
 
-[![Project Elixir - Team Disrupt](Screenshot 2021-02-10 133841.png)](https://youtu.be/8Q4nvnozVsI "Project Elixir - Team Disrupt")
+[![Project Elixir - Team Disrupt](photo.png)](https://youtu.be/8Q4nvnozVsI "Project Elixir - Team Disrupt")
