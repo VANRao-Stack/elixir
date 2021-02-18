@@ -14,7 +14,6 @@ from kivymd.uix.textfield import MDTextField
 from kivymd.uix.button import MDFillRoundFlatButton,MDIconButton
 from kivymd.uix.label import MDIcon
 import elixir as ex
-import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -767,15 +766,15 @@ class AdvancedInputScreen(Screen):
 
 class LoadingScreen(Screen):
     arteryObj = None
-    """def on_enter(self):        
+    def on_enter(self):        
         ResultOptionScreen.model = self.arteryObj.sci_train()
         ResultOptionScreen.arteryObj = self.arteryObj
         app = App.get_running_app()
-        app.root.current = "resultoption""""
-        def on_enter(self):
-            redictorScreen.arteryObj = self.arteryObj
-            app = App.get_running_app()
-            app.root.current = "predictor"
+        app.root.current = "resultoption"
+    #def on_enter(self):
+        #PredictorScreen.arteryObj = self.arteryObj
+        #app = App.get_running_app()
+        #app.root.current = "predictor"
 
 
 class ResultOptionScreen(Screen):
@@ -789,7 +788,6 @@ class ResultOptionScreen(Screen):
         FlowInputScreen.arteryObj = self.arteryObj
         app = App.get_running_app()
         app.root.current = "flowinput"
-
     def radius(self):
         RadiusInputScreen.arteryObj = self.arteryObj
         app = App.get_running_app()
@@ -804,8 +802,8 @@ class PredictorScreen(Screen):
     q = ObjectProperty(None)
     def predict(self):
         #print("predicting")
-        self.r.text=self.arteryObj.q_network[[float(self.z.text), float(self.t.text)]]
-        self.q.text=self.arteryObj.R_network[[self.z.text, float(self.t.text)]]
+        self.r.text=str(abs(self.arteryObj.q_network.predict([[float(self.z.text), float(self.t.text)]])))
+        self.q.text=str(abs(self.arteryObj.R_network.predict([[float(self.z.text), float(self.t.text)]])))
 
 class FlowInputScreen(Screen):
     arteryObj = None
@@ -866,21 +864,26 @@ class RadiusOutputScreen(Screen):
     
 
 def plot(network, length, time, plot_type):
+    plt.style.use('ggplot')
     x = np.linspace(0, int(length), int(length)*10)
-    print(x.shape)
+    #print(x.shape)
     y = []
     for i in x:
-        y.append(network.predict([[i, time]]))
+        y.append(abs(network.predict([[i, time]])))
     y = np.asarray(y).reshape((int(length)*10, ))
-    print(y.shape)
-    sns.set_style('darkgrid')
-    sns.set(rc={'figure.figsize':(11.7, 8.27)})
-    sns.set(font_scale=1.4)
-    d = {'Lenght':x, plot_type:y}
-    sns.lineplot(data=d, x='Lenght', y=plot_type, palette=('red',), linewidth=2.5).set_title(plot_type)
+    #print(y.shape)
+    #sns.set_style('darkgrid')
+    #sns.set(rc={'figure.figsize':(11.7, 8.27)})
+    #sns.set(font_scale=1.4)
+    #d = {'Lenght':x, plot_type:y}
+    #sns.lineplot(data=d, x='Lenght', y=plot_type, palette=('red',), linewidth=2.5).set_title(plot_type)
+    plt.plot(x, y, linewidth = 2.0)
+    plt.xlabel('Position Along Z')
+    plt.ylabel(plot_type)
     value = plot_type + '_t_' + str(time) + '.png'
-    plt.savefig(value)
-    return value    
+    plt.savefig('./Plots/' + value)
+    plt.clf()
+    return 'Plots/' + value    
     
     
 class v1App(MDApp):
