@@ -30,3 +30,7 @@ comes from a standard list of such methods.
 We present a new method that, unlike its predecessors, offers a continuous
 solution, along with other benefits such as GPU support, a massive community,
 and such like. 
+
+## Usage
+
+Please refer to the instruction manual for instructions on how to set up and use the application as well as the python package. 
