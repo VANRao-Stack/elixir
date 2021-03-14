@@ -33,4 +33,4 @@ and such like.
 
 ## Usage
 
-Please refer to the instruction manual for instructions on how to set up and use the application as well as the python package. 
+Please refer to the instruction manual for instructions on how to set up and use the python package. 
