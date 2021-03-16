@@ -33,4 +33,4 @@ and such like.
 
 ## Usage
 
-Please refer to the instruction manual for instructions on how to set up and use the python package. 
+Please refer to the [instruction manual](https://github.com/VANRao-Stack/elixir/blob/main/Instruction%20Manual.pdf) for instructions on how to set up and use the python package. 
