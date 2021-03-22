@@ -34,3 +34,7 @@ and such like.
 ## Usage
 
 Please refer to the [instruction manual](https://github.com/VANRao-Stack/elixir/blob/main/Instruction%20Manual.pdf) for instructions on how to set up and use the python package. 
+
+## Paper
+
+Please refer to the abstract for information regarding the theory and implementational details of the project.  
