@@ -37,4 +37,4 @@ Please refer to the [instruction manual](https://github.com/VANRao-Stack/elixir/
 
 ## Paper
 
-Please refer to the abstract for information regarding the theory and implementational details of the project.  
+Please refer to the [abstract](https://github.com/VANRao-Stack/elixir/blob/main/Abstract.pdf) for information regarding the theory and implementational details of the project.  
